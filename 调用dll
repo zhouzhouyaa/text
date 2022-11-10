@@ -1,0 +1,26 @@
+%  用loadlibrary函数， 根据epanet2.h中的函数定义，加载epanet2.dll
+loadlibrary('epanet2.dll','epanet2.h');
+%  查看epanet2.dll支持的函数接口
+% [int32, string, string, string] ENopen(string, string, string)
+% int32 ENsolveH
+% [int32, singlePtr] ENgetnodevalue(int32, int32, singlePtr)
+a1='epanet2.inp';
+a2='epanet2.rpt';
+a3='';
+a_1=libpointer('stringPtr',a1);
+a_2=libpointer('stringPtr',a2);
+a_3=libpointer('stringPtr',a3);
+[d,a_1,a_2,a_3]=calllib('epanet2','ENopen',a1,a2,a3);
+
+calllib('epanet2','ENsolveH');
+
+c1=12;
+c2=11;
+demand=0;
+c3=demand;
+c_3=libpointer('singlePtr',c3);
+[t,c_3]=calllib('epanet2','ENgetnodevalue',c1,c2,c_3);
+
+calllib('epanet2','ENclose')
+
+unloadlibrary('epanet2'）
